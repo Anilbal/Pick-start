@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import React from "react";
 
 const Navbar: React.FC = () => {
@@ -5,7 +6,9 @@ const Navbar: React.FC = () => {
     <nav className="w-full  bg-gray-50 border border-gray-200 flex items-center h-14 fixed top-0 left-0 z-10">
       {/* Logo */}
       <div className="w-1/5 flex items-center px-4 border-r border-gray-300 h-full">
-        <span className="text-xl font-semibold">MyApp</span>
+        <Link to="/home" className="text-xl font-semibold cursor-pointer">
+          Pick&Start
+        </Link>
       </div>
 
       {/* Right Section */}
