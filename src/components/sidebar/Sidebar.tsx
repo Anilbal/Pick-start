@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Dropdown } from "../common/icon/Icon";
+import { BackendConstants } from "../../constants/Backend";
 
 interface SectionProps {
   title: string;
@@ -14,7 +15,7 @@ const Section = ({ title, children }: SectionProps) => (
 );
 
 const Item = ({ label }: { label: string }) => (
-  <div className="cursor-pointer px-2 py-1.5 transition hover:underline text-[15px]">
+  <div className="cursor-pointer px-2 py-1.5 transition hover:underline text-[15px] select-none">
     {label}
   </div>
 );
@@ -22,7 +23,10 @@ const Item = ({ label }: { label: string }) => (
 const SubItem = ({ items }: { items: string[] }) => (
   <ol className="ml-2" start={1}>
     {items.map((item, index) => (
-      <li key={index} className="cursor-pointer px-2 py-1 transition text-[15px]">
+      <li
+        key={index}
+        className="cursor-pointer px-2 py-1 transition text-[15px]"
+      >
         {`1.${index + 1}`} {item}
       </li>
     ))}
@@ -37,18 +41,16 @@ export default function Sidebar() {
       {/* UI COMPONENTS */}
       <Section title="Backend">
         <div
-          className="flex justify-between items-center cursor-pointer px-2 py-1.5 transition rounded-sm hover:underline"
+          className="flex justify-between items-center cursor-pointer transition rounded-sm hover:underline"
           onClick={() => setOpenUI(!openUI)}
         >
-          <span className="text-[15px]">Node with express and postgres</span>
+          <Item label="Node with express and postgres" />
           <span className={`transition text-xs ${openUI ? "rotate-180" : ""}`}>
             <Dropdown />
           </span>
         </div>
 
-        {openUI && (
-          <SubItem items={["Simple Table", "Striped Table", "Striped Table"]} />
-        )}
+        {openUI && <SubItem items={BackendConstants} />}
       </Section>
 
       {/* WIDGETS */}
