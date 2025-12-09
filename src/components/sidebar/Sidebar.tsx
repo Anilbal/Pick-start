@@ -24,7 +24,7 @@ export default function Sidebar() {
   const [openUI, setOpenUI] = useState(true);
 
   return (
-    <aside className="w-1/5 bg-[#0c1a2b]/90 text-gray-200 h-screen px-4 py-6 backdrop-blur">
+    <aside className="w-1/5 bg-[#0c1a2b]/90 text-gray-200 h-screen px-4 py-6 backdrop-blur mt-14">
       {/* MENU TITLE */}
       <h1 className="text-sm font-bold text-gray-400 uppercase tracking-wide">
         Menu

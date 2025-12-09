@@ -1,15 +1,7 @@
-import Navbar from "./components/navbar/Navbar";
-import Sidebar from "./components/sidebar/Sidebar";
+import Login from "./components/login/Login";
 
 function App() {
-  return (
-    <>
-      <Navbar />
-      <main>
-        <Sidebar />
-      </main>
-    </>
-  );
+  return <Login />;
 }
 
 export default App;
