@@ -1,16 +1,17 @@
 import { useRouterState } from "@tanstack/react-router";
 import NotFound from "../pageNotFound/PageNotFound";
+import TechList from "./techList/TechList";
 
-const DynamicContent: React.FC = () => {
+const MainContent: React.FC = () => {
   const path = useRouterState({
     select: (state) => state.location.pathname,
   });
 
   return (
     <div className="h-full w-full">
-      {path === "/home" ? "hello" : <NotFound />}
+      {path === "/home" ? <TechList /> : <NotFound />}
     </div>
   );
 };
 
-export default DynamicContent;
+export default MainContent;
