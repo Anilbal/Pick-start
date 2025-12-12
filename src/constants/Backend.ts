@@ -1,6 +1,7 @@
-export interface Props {
-  //   label: string;
-  //   path: string;
-}
-
-export const BackendConstants: string[] = ["Environment Setup"];
+export const BackendConstants: string[] = [
+  "Environment Setup",
+  "Required Packages",
+  "Create Server",
+  "Connect Env",
+  "Connect Database",
+];

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Dropdown } from "../common/icon/Icon";
 import { BackendConstants } from "../../constants/Backend";
+import { Link } from "@tanstack/react-router";
 
 interface SectionProps {
   title: string;
@@ -14,10 +15,13 @@ const Section = ({ title, children }: SectionProps) => (
   </div>
 );
 
-const Item = ({ label }: { label: string }) => (
-  <div className="cursor-pointer px-2 py-1.5 transition hover:underline text-[15px] select-none">
+const Item = ({ label, path }: { label: string; path?: string }) => (
+  <Link
+    to={path}
+    className="cursor-pointer px-2 py-1.5 transition hover:underline text-[15px] select-none"
+  >
     {label}
-  </div>
+  </Link>
 );
 
 const SubItem = ({ items }: { items: string[] }) => (
@@ -44,7 +48,10 @@ export default function Sidebar() {
           className="flex justify-between items-center cursor-pointer transition rounded-sm hover:underline"
           onClick={() => setOpenUI(!openUI)}
         >
-          <Item label="Node with express and postgres" />
+          <Item
+            label="Node with express and postgres"
+            path="/home/node-with-express-postgres"
+          />
           <span className={`transition text-xs ${openUI ? "rotate-180" : ""}`}>
             <Dropdown />
           </span>
@@ -54,21 +61,10 @@ export default function Sidebar() {
       </Section>
 
       {/* WIDGETS */}
-      <Section title="Widgets">
-        <Item label="Dashboard Boxes" />
+      <Section title="Frontend">
+        <Item label="React with JS" />
       </Section>
 
-      {/* FORMS */}
-      <Section title="Forms">
-        <Item label="Controls" />
-        <Item label="Layouts" />
-        <Item label="Validation" />
-      </Section>
-
-      {/* CHARTS */}
-      <Section title="Charts">
-        <Item label="ChartJS" />
-      </Section>
     </aside>
   );
 }
