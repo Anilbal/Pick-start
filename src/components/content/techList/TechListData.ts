@@ -13,7 +13,7 @@ export const TechStackList: Props[] = [
     techList: "Node, Express, Postgres, Nodemon, Pg, Dotenv, Joi",
     description:
       "This backend uses Node.js as the runtime engine, Express for routing and handling requests, Postgres as the data store, with pg to connect to the database, dotenv for secure configuration, nodemon for automatic development restarts, and joi for robust data validation.",
-    path: "/node-with-express-postgres",
+    path: "/home/node-with-express-postgres",
   },
   {
     logo: "https://cdn.hashnode.com/res/hashnode/image/upload/v1603364914733/h0KAsRvrJ.png",

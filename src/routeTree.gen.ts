@@ -13,6 +13,8 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as ForgetPasswordRouteImport } from './routes/forgetPassword'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HomeIndexRouteImport } from './routes/home/index'
+import { Route as HomeNodeWithExpressPostgresRouteImport } from './routes/home/node-with-express-postgres'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -34,38 +36,72 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HomeIndexRoute = HomeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HomeRoute,
+} as any)
+const HomeNodeWithExpressPostgresRoute =
+  HomeNodeWithExpressPostgresRouteImport.update({
+    id: '/node-with-express-postgres',
+    path: '/node-with-express-postgres',
+    getParentRoute: () => HomeRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgetPassword': typeof ForgetPasswordRoute
-  '/home': typeof HomeRoute
+  '/home': typeof HomeRouteWithChildren
   '/register': typeof RegisterRoute
+  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRoute
+  '/home/': typeof HomeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgetPassword': typeof ForgetPasswordRoute
-  '/home': typeof HomeRoute
   '/register': typeof RegisterRoute
+  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRoute
+  '/home': typeof HomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/forgetPassword': typeof ForgetPasswordRoute
-  '/home': typeof HomeRoute
+  '/home': typeof HomeRouteWithChildren
   '/register': typeof RegisterRoute
+  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRoute
+  '/home/': typeof HomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/forgetPassword' | '/home' | '/register'
+  fullPaths:
+    | '/'
+    | '/forgetPassword'
+    | '/home'
+    | '/register'
+    | '/home/node-with-express-postgres'
+    | '/home/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forgetPassword' | '/home' | '/register'
-  id: '__root__' | '/' | '/forgetPassword' | '/home' | '/register'
+  to:
+    | '/'
+    | '/forgetPassword'
+    | '/register'
+    | '/home/node-with-express-postgres'
+    | '/home'
+  id:
+    | '__root__'
+    | '/'
+    | '/forgetPassword'
+    | '/home'
+    | '/register'
+    | '/home/node-with-express-postgres'
+    | '/home/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForgetPasswordRoute: typeof ForgetPasswordRoute
-  HomeRoute: typeof HomeRoute
+  HomeRoute: typeof HomeRouteWithChildren
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -99,13 +135,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/home/': {
+      id: '/home/'
+      path: '/'
+      fullPath: '/home/'
+      preLoaderRoute: typeof HomeIndexRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    '/home/node-with-express-postgres': {
+      id: '/home/node-with-express-postgres'
+      path: '/node-with-express-postgres'
+      fullPath: '/home/node-with-express-postgres'
+      preLoaderRoute: typeof HomeNodeWithExpressPostgresRouteImport
+      parentRoute: typeof HomeRoute
+    }
   }
 }
+
+interface HomeRouteChildren {
+  HomeNodeWithExpressPostgresRoute: typeof HomeNodeWithExpressPostgresRoute
+  HomeIndexRoute: typeof HomeIndexRoute
+}
+
+const HomeRouteChildren: HomeRouteChildren = {
+  HomeNodeWithExpressPostgresRoute: HomeNodeWithExpressPostgresRoute,
+  HomeIndexRoute: HomeIndexRoute,
+}
+
+const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForgetPasswordRoute: ForgetPasswordRoute,
-  HomeRoute: HomeRoute,
+  HomeRoute: HomeRouteWithChildren,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport

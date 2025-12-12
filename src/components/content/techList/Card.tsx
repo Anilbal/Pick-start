@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import type { Props } from "./TechListData";
 
 const TechCard: React.FC<Props> = ({
@@ -31,9 +32,9 @@ const TechCard: React.FC<Props> = ({
       <div className="flex justify-between items-center text-sm">
         <p className="text-gray-400">Installed times</p>
 
-        <a href={path} className="text-blue-600 font-medium hover:underline">
+        <Link to={path} className="text-blue-600 font-medium hover:underline">
           Learn more →
-        </a>
+        </Link>
       </div>
     </div>
   );
