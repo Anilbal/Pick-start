@@ -29,7 +29,7 @@ const SubItem = ({ items }: { items: string[] }) => (
     {items.map((item, index) => (
       <li
         key={index}
-        className="cursor-pointer px-2 py-1 transition text-[15px]"
+        className="cursor-pointer px-2 py-1 transition text-[15px] hover:underline"
       >
         {`1.${index + 1}`} {item}
       </li>
