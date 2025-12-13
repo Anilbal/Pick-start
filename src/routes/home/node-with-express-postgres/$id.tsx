@@ -1,15 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import NodeWithPostgresDynmamicContent from "../../../components/content/nodeWithPostgres/contentList/NodeWithPostgresList";
 
 export const Route = createFileRoute("/home/node-with-express-postgres/$id")({
-  component: NodePage,
+  component: NodeWithPostgresDynmamicContent,
 });
-
-function NodePage() {
-  const { id } = Route.useParams();
-
-  return (
-    <div>
-      <h1>Node ID: {id}</h1>
-    </div>
-  );
-}
