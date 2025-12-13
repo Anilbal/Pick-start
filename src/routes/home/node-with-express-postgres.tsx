@@ -1,7 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import NodeWithPostgres from '../../components/content/nodeWithPostgres/NodeWithPostgres'
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/home/node-with-express-postgres')({
-  component: NodeWithPostgres,
-})
+export const Route = createFileRoute("/home/node-with-express-postgres")({
+  component: RouteComponent,
+});
 
+function RouteComponent() {
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
+}

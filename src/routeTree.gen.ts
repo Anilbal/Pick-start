@@ -15,6 +15,8 @@ import { Route as ForgetPasswordRouteImport } from './routes/forgetPassword'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as HomeNodeWithExpressPostgresRouteImport } from './routes/home/node-with-express-postgres'
+import { Route as HomeNodeWithExpressPostgresIndexRouteImport } from './routes/home/node-with-express-postgres/index'
+import { Route as HomeNodeWithExpressPostgresIdRouteImport } from './routes/home/node-with-express-postgres/$id'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -47,21 +49,36 @@ const HomeNodeWithExpressPostgresRoute =
     path: '/node-with-express-postgres',
     getParentRoute: () => HomeRoute,
   } as any)
+const HomeNodeWithExpressPostgresIndexRoute =
+  HomeNodeWithExpressPostgresIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => HomeNodeWithExpressPostgresRoute,
+  } as any)
+const HomeNodeWithExpressPostgresIdRoute =
+  HomeNodeWithExpressPostgresIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => HomeNodeWithExpressPostgresRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgetPassword': typeof ForgetPasswordRoute
   '/home': typeof HomeRouteWithChildren
   '/register': typeof RegisterRoute
-  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRoute
+  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRouteWithChildren
   '/home/': typeof HomeIndexRoute
+  '/home/node-with-express-postgres/$id': typeof HomeNodeWithExpressPostgresIdRoute
+  '/home/node-with-express-postgres/': typeof HomeNodeWithExpressPostgresIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgetPassword': typeof ForgetPasswordRoute
   '/register': typeof RegisterRoute
-  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRoute
   '/home': typeof HomeIndexRoute
+  '/home/node-with-express-postgres/$id': typeof HomeNodeWithExpressPostgresIdRoute
+  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +86,10 @@ export interface FileRoutesById {
   '/forgetPassword': typeof ForgetPasswordRoute
   '/home': typeof HomeRouteWithChildren
   '/register': typeof RegisterRoute
-  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRoute
+  '/home/node-with-express-postgres': typeof HomeNodeWithExpressPostgresRouteWithChildren
   '/home/': typeof HomeIndexRoute
+  '/home/node-with-express-postgres/$id': typeof HomeNodeWithExpressPostgresIdRoute
+  '/home/node-with-express-postgres/': typeof HomeNodeWithExpressPostgresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,13 +100,16 @@ export interface FileRouteTypes {
     | '/register'
     | '/home/node-with-express-postgres'
     | '/home/'
+    | '/home/node-with-express-postgres/$id'
+    | '/home/node-with-express-postgres/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/forgetPassword'
     | '/register'
-    | '/home/node-with-express-postgres'
     | '/home'
+    | '/home/node-with-express-postgres/$id'
+    | '/home/node-with-express-postgres'
   id:
     | '__root__'
     | '/'
@@ -96,6 +118,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/home/node-with-express-postgres'
     | '/home/'
+    | '/home/node-with-express-postgres/$id'
+    | '/home/node-with-express-postgres/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -149,16 +173,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeNodeWithExpressPostgresRouteImport
       parentRoute: typeof HomeRoute
     }
+    '/home/node-with-express-postgres/': {
+      id: '/home/node-with-express-postgres/'
+      path: '/'
+      fullPath: '/home/node-with-express-postgres/'
+      preLoaderRoute: typeof HomeNodeWithExpressPostgresIndexRouteImport
+      parentRoute: typeof HomeNodeWithExpressPostgresRoute
+    }
+    '/home/node-with-express-postgres/$id': {
+      id: '/home/node-with-express-postgres/$id'
+      path: '/$id'
+      fullPath: '/home/node-with-express-postgres/$id'
+      preLoaderRoute: typeof HomeNodeWithExpressPostgresIdRouteImport
+      parentRoute: typeof HomeNodeWithExpressPostgresRoute
+    }
   }
 }
 
+interface HomeNodeWithExpressPostgresRouteChildren {
+  HomeNodeWithExpressPostgresIdRoute: typeof HomeNodeWithExpressPostgresIdRoute
+  HomeNodeWithExpressPostgresIndexRoute: typeof HomeNodeWithExpressPostgresIndexRoute
+}
+
+const HomeNodeWithExpressPostgresRouteChildren: HomeNodeWithExpressPostgresRouteChildren =
+  {
+    HomeNodeWithExpressPostgresIdRoute: HomeNodeWithExpressPostgresIdRoute,
+    HomeNodeWithExpressPostgresIndexRoute:
+      HomeNodeWithExpressPostgresIndexRoute,
+  }
+
+const HomeNodeWithExpressPostgresRouteWithChildren =
+  HomeNodeWithExpressPostgresRoute._addFileChildren(
+    HomeNodeWithExpressPostgresRouteChildren,
+  )
+
 interface HomeRouteChildren {
-  HomeNodeWithExpressPostgresRoute: typeof HomeNodeWithExpressPostgresRoute
+  HomeNodeWithExpressPostgresRoute: typeof HomeNodeWithExpressPostgresRouteWithChildren
   HomeIndexRoute: typeof HomeIndexRoute
 }
 
 const HomeRouteChildren: HomeRouteChildren = {
-  HomeNodeWithExpressPostgresRoute: HomeNodeWithExpressPostgresRoute,
+  HomeNodeWithExpressPostgresRoute:
+    HomeNodeWithExpressPostgresRouteWithChildren,
   HomeIndexRoute: HomeIndexRoute,
 }
 

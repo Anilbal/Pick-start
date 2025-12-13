@@ -6,8 +6,12 @@ const NodeWithPostgres: React.FC = () => {
     <div className="p-6">
       <h1 className="text-xl font-medium underline">Overview:</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-        {BackendConstants.map((item,index)=>(
-            <Card index={`1.${index+1}`} title={item} path="" />
+        {BackendConstants.map((item, index) => (
+          <Card
+            index={`1.${index + 1}`}
+            title={item}
+            path={`/home/node-with-express-postgres/1.${index + 1}`}
+          />
         ))}
       </div>
     </div>
