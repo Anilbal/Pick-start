@@ -24,17 +24,25 @@ const Item = ({ label, path }: { label: string; path?: string }) => (
   </Link>
 );
 
-const SubItem = ({ items }: { items: string[] }) => (
-  <ol className="ml-2" start={1}>
+const SubItem = ({
+  items,
+  path,
+}: {
+  items: string[];
+  path: "/home/node-with-express-postgres";
+}) => (
+  <div className="ml-2 flex flex-col">
     {items.map((item, index) => (
-      <li
+      <Link
         key={index}
         className="cursor-pointer px-2 py-1 transition text-[15px] hover:underline"
+        to={`${path}/$id`}
+        params={{ id: `1.${index + 1}` }}
       >
         {`1.${index + 1}`} {item}
-      </li>
+      </Link>
     ))}
-  </ol>
+  </div>
 );
 
 export default function Sidebar() {
@@ -57,14 +65,18 @@ export default function Sidebar() {
           </span>
         </div>
 
-        {openUI && <SubItem items={BackendConstants} />}
+        {openUI && (
+          <SubItem
+            items={BackendConstants}
+            path="/home/node-with-express-postgres"
+          />
+        )}
       </Section>
 
       {/* WIDGETS */}
       <Section title="Frontend">
         <Item label="React with JS" />
       </Section>
-
     </aside>
   );
 }
